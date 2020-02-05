@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ event.productname }}</h2>
+<p>Event Title  : {{ event.EventTitle }} </p>
+<p>Where        : {{ event.Location }}</p>
+<p>When         : {{ event.Date }}</p>
+<p>What time    : {{ event.Time }}</p>
+<p>Description  : {{ event.Description }}</p>
+<p>UserID       : {{ event.UserID }}</p>
+
+{% endblock %}
