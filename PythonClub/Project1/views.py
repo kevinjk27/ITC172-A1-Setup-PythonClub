@@ -19,6 +19,5 @@ def getevents(request):
 
 def eventsdetails(request, id):
     event=get_object_or_404(Event, pk=id)
-    
     return render(request, 'Project1/eventdetails.html', {'event' : event}
     )
