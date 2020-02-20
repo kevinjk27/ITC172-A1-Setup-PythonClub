@@ -5,8 +5,11 @@ from .views import index, getmeetings, getresources, getevents
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+from .forms import MeetingForm, MeetingMinutesForm, EventForm, ResourceForm
+
 # Create your tests here.
 
+# TESTING models
 class MeetingTest(TestCase):
    def setUp(self):
        self.meeting = Meeting(MeetingTitle="How to be Better Employer 101",
@@ -35,8 +38,7 @@ class MeetingTest(TestCase):
    def test_meeting_agenda(self):
        self.assertEqual(self.meeting.Agenda, "How to be Better Employer 101 will invite Forbes Top 30 hiring manager")
 
-
-
+# TESTING views
 class IndexTest(TestCase):
    def test_view_url_accessible_by_name(self):
        response = self.client.get(reverse('index'))
@@ -74,3 +76,34 @@ class GetEventDetailsTest(TestCase):
         response = self.client.get(reverse('eventdetails', args=(self.event.id,)))
         # Assert that self.post is actually returned by the post_detail view
         self.assertEqual(response.status_code, 200)
+
+
+# TESTING forms
+class Meeting_Form_Test(TestCase):
+    def test_meeting_form_is_valid(self):
+        form=MeetingForm(data={'MeetingTitle': "Board of Chamber",
+        'MeetingDate' : "2020-05-12",
+        'MeetingTime' : "14:00:00",
+        'MeetingLocation' : "S Jackson St",
+        'Agenda' : "Selecting a new leader"})
+        self.assertTrue(form.is_valid())
+
+    def test_meeting_form_empty(self):
+        form=MeetingForm(data={'MeetingTitle': ""})
+        self.assertFalse(form.is_valid())
+
+
+
+class ResourceForm_Form_Test(TestCase):
+    def test_resource_form_is_valid(self):
+        form=ResourceForm(data={'ResourceName' : "Database Design for Mere Mortals",
+        'ResourceURL' : "https://www.bookfinder.com/buyback/search/#9780321884497",
+        'ResourceType' : "Textbook",
+        'DateEntered' : "2020-01-30",
+        'UserID' : "1",
+        'Description' : "A Hands-On Guide to Relational Database Design"})
+        self.assertTrue(form.is_valid())
+
+    def test_resource_form_empty(self):
+        form=ResourceForm(data={'ResourceName': ""})
+        self.assertFalse(form.is_valid())
