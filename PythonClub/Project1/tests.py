@@ -100,7 +100,7 @@ class ResourceForm_Form_Test(TestCase):
         'ResourceURL' : "https://www.bookfinder.com/buyback/search/#9780321884497",
         'ResourceType' : "Textbook",
         'DateEntered' : "2020-01-30",
-        'UserID' : "1",
+        'UserID' : User,
         'Description' : "A Hands-On Guide to Relational Database Design"})
         self.assertTrue(form.is_valid())
 
