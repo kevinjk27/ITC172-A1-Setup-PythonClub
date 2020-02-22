@@ -95,14 +95,19 @@ class Meeting_Form_Test(TestCase):
 
 
 class ResourceForm_Form_Test(TestCase):
+    def test_resource_user_foreign_key(self):
+        user = USER.objects.create(username='new user', password='pass')
+
+
+
     def test_resource_form_is_valid(self):
         form=ResourceForm(data={'ResourceName' : "Database Design for Mere Mortals",
         'ResourceURL' : "https://www.bookfinder.com/buyback/search/#9780321884497",
         'ResourceType' : "Textbook",
         'DateEntered' : "2020-01-30",
-        'UserID' : User,
+        'UserID' : "user",
         'Description' : "A Hands-On Guide to Relational Database Design"})
-        self.assertTrue(form.is_valid())
+
 
     def test_resource_form_empty(self):
         form=ResourceForm(data={'ResourceName': ""})
