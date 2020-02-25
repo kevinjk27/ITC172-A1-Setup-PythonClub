@@ -96,7 +96,7 @@ class Meeting_Form_Test(TestCase):
 
 class ResourceForm_Form_Test(TestCase):
     def test_resource_user_foreign_key(self):
-        user = USER.objects.create(username='new user', password='pass')
+        self.user = User.objects.create(username='new user', password='pass')
 
 
 
