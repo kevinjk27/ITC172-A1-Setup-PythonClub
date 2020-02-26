@@ -4,6 +4,7 @@ from .forms import MeetingForm
 from .forms import MeetingMinutesForm
 from .forms import EventForm
 from .forms import ResourceForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index (request):
@@ -73,3 +74,23 @@ def newresource(request):
      else:
           form=ResourceForm()
      return render(request, 'Project1/newresource.html', {'form': form})
+
+
+def loginmessage(request):
+    return render(request, 'Project1/loginmessage.html')
+
+def logoutmessage(request):
+    return render(request, 'Project1/logoutmessage.html')
+
+@login_required
+def newmeeting(request):
+     form=MeetingForm
+     if request.method=='POST':
+          form=MeetingForm(request.POST)
+          if form.is_valid():
+               post=form.save(commit=True)
+               post.save()
+               form=MeetingForm()
+     else:
+          form=MeetingForm()
+     return render(request, 'Project1/newmeeting.html', {'form': form})

@@ -112,3 +112,24 @@ class ResourceForm_Form_Test(TestCase):
     def test_resource_form_empty(self):
         form=ResourceForm(data={'ResourceName': ""})
         self.assertFalse(form.is_valid())
+
+
+class New_Meeting_authentication_test(TestCase):
+    def setUp(self):
+        self.test_user = User.objects.create(username='new user', password='pass')    
+        self.meeting=Meeting.objects.create(MeetingTitle='meetingname',
+        MeetingDate='2020-05-12',
+        MeetingTime='14:00:00',
+        MeetingLocation='S Jackson St',
+        Agenda='Selecting a new leader')
+
+    def test_redirect_if_not_logged_in(self):
+        response=self.client.get(reverse('newmeeting'))
+        self.assertRedirects(response, '/accounts/login/?next=/Project1/newmeeting')
+
+    def test_Logged_in_uses_correct_template(self):
+        self.login=self.client.login(username='testuser1', password='P@ssw0rd1')
+        response=self.client.get(reverse('newmeeting'))
+        self.assertEqual(str(response.context['test_user']), 'new user')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'Project1/newmeeting.html')
